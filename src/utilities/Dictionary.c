@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../../headers/struct.h"
-// #include "../../headers/display.h"
+#include "../../headers/Display.h"
+#include "../../headers/Dictionary.h"
 
 // ? START HELPERS
 

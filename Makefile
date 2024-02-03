@@ -1,16 +1,15 @@
-# Makefile for HangmanGame
-
 # Compiler and compiler flags
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99
+CFLAGS = -Wall -Wextra -std=c99 -g
 
 # Directories
 SRC_DIR = src
 HEADERS_DIR = headers
 UTILITIES_DIR = $(SRC_DIR)/utilities
+HELPERS_DIR = $(SRC_DIR)/helpers
 
 # Source files
-SRCS = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(UTILITIES_DIR)/*.c) HangMan.c
+SRCS = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(UTILITIES_DIR)/*.c) $(wildcard $(HELPERS_DIR)/*.c) HangMan.c
 
 # Object files
 OBJS = $(patsubst %.c, %.o, $(SRCS))
