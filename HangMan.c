@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include "headers/struct.h"
 #include "headers/tree.h"
+#include "headers/Dictionary.h"
 
 int main() {
     // Create an empty tree
