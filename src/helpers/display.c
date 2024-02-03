@@ -208,7 +208,7 @@ tree *handleFile(tree *dico)
         scanf("%s", filename);
     } while (strlen(filename) < 0 || strlen(filename) > 100);
 
-    FILE *file = fopen(filename, "r");
+    FILE *file = fopen("src/Words/Animals/level1.txt", "r");
 
     system("clear");
     printHeader("Insertion Options", 25);
