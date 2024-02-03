@@ -197,25 +197,16 @@ void printSubMenu()
     printFooter();
 }
 
-tree *handleFile(tree *dico)
-{
-    char filename[100];
+tree *handleFile(tree *dico) {
+    char filename[] = "src/Words/Animals/level1.txt";  // Hardcoded file path
 
-    do
-    {
-        printCharactere(' ', 4);
-        printf("Entrer nom fichier => ");
-        scanf("%s", filename);
-    } while (strlen(filename) < 0 || strlen(filename) > 100);
-
-    FILE *file = fopen("src/Words/Animals/level1.txt", "r");
+    FILE *file = fopen(filename, "r");
 
     system("clear");
     printHeader("Insertion Options", 25);
     printCharactere(' ', 18);
 
-    if (!file)
-    {
+    if (!file) {
         printf("\033[1;31mVeuillez vérifier le nom de fichier\033[0m");
         printFooter();
 
@@ -224,15 +215,14 @@ tree *handleFile(tree *dico)
 
     char line[500];
 
-    while (fgets(line, sizeof(line), file))
-    {
+    while (fgets(line, sizeof(line), file)) {
         line[strlen(line) - 1] = '\0';
         dico = dicoInsererMot(line, dico, 0);
     }
 
     fclose(file);
 
-    printf("\033[0;32mMots ajouté avec success\033[0m");
+    printf("\033[0;32mMots ajoutés avec succès\033[0m");
     printFooter();
 
     return dico;

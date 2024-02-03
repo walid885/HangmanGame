@@ -193,3 +193,23 @@ int dicoNbMotsTotal(tree *root)
 
     return 0;
 }
+
+void printTreeStructure(tree *root, int level) {
+    if (root == NULL) {
+        return;
+    }
+
+    // Print the right subtree
+    printTreeStructure(root->right, level + 1);
+
+    // Indentation based on the level
+    for (int i = 0; i < level; i++) {
+        printf("   ");
+    }
+
+    // Print the node data
+    printf("%c\n", root->letter);
+
+    // Print the left subtree
+    printTreeStructure(root->left, level + 1);
+}
