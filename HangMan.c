@@ -22,9 +22,18 @@ int main() {
 
     // Check if the tree is empty
     int isEmpty = arbreEstVide(root);
-   printf("Success!");
+   printf("Success! and It is working !!");
     // Delete the tree
     arbreSuppr(root);
 
     return 0;
 }
+/*
+commands : make to make the files 
+            make run : to make and execute the project 
+            make cleanobj  , in order to clean the .o files 
+            make clean : to clean all the files, and lets only the code 
+
+
+
+*/

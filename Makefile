@@ -1,27 +1,44 @@
+# Makefile for HangmanGame
+
+# Compiler and compiler flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -std=c99 -Iheaders
-LDFLAGS = -lm
+CFLAGS = -Wall -Wextra -std=c99
 
-SRCDIR = src
-OBJDIR = obj
+# Directories
+SRC_DIR = src
+HEADERS_DIR = headers
+UTILITIES_DIR = $(SRC_DIR)/utilities
 
-SOURCES = $(wildcard $(SRCDIR)/*.c) HangMan.c
-OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SOURCES))
+# Source files
+SRCS = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(UTILITIES_DIR)/*.c) HangMan.c
 
-EXECUTABLE = HangMan
+# Object files
+OBJS = $(patsubst %.c, %.o, $(SRCS))
 
-.PHONY: all clean
+# Executable name
+EXEC = HangMan
 
-all: $(EXECUTABLE)
+# Build rule
+all: $(EXEC)
 
-$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $^ -o $@
+$(EXEC): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(EXEC)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+# Object files rule
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-./obj/tree.o: ./src/utilities/tree.c
-	$(CC) $(CFLAGS) -c $< -o $@
+# Dependencies
+$(OBJS): $(wildcard $(HEADERS_DIR)/*.h)
 
+# Clean rule
 clean:
-	rm -f $(EXECUTABLE) $(OBJECTS) ./obj/tree.o
+	rm -f $(OBJS) $(EXEC)
+
+# Clean object files rule
+cleanobj:
+	rm -f $(OBJS)
+
+# Run rule
+run: $(EXEC)
+	./$(EXEC)
