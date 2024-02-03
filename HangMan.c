@@ -2,6 +2,7 @@
 #include "headers/struct.h"
 #include "headers/tree.h"
 #include "headers/Dictionary.h"
+#include "headers/Display.h"
 
 int main() {
     // Create an empty tree
@@ -12,7 +13,8 @@ int main() {
     // Check if the tree is empty
     if (arbreEstVide(myTree)) {
         // Handle the empty tree case, e.g., create a new root
-       //  myTree = createNewRoot();
+            myTree = fillTree(myTree);
+
            printf("the treeee is empty babe !\n");
 
     } else {
