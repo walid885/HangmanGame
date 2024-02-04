@@ -36,11 +36,13 @@ void printOptions()
     printSingleOption("3. Afficher le nombre totales des mots", 4, 26, 0);
     printSingleOption("4. Afficher le nombre des mots differents", 4, 23, 0);
     printSingleOption("5. Consulter le nombre d'occurence d'un mot", 4, 21, 0);
-    //printSingleOption("6. Piocher un mot", 4, 47, 0);
+    printSingleOption("6. Choisir un Niveau", 4, 47, 0);
+
     printSingleOption("7. Vider l'arbre", 4, 48, 0);
     printSingleOption(" ", 4, 63, 0);
     printSingleOption("0. Quitter", 4, 54, 1);
 }
+
 
 void printHeader(const char *content, int spacing)
 {
@@ -139,6 +141,144 @@ void printOccurrences(tree *dico)
         printFooter();
     }
 }
+
+void printEmptiedTree(tree *dico)
+{
+    system("clear");
+    printHeader("Dictionary Management", 22);
+    printCharactere(' ', 25);
+    if (dico == NULL)
+    {
+        printf("\033[1;31mL'arbre est déja vide\033[0m");
+    }
+    else
+    {
+        printf("\033[0;32mArbre effacé avec succès\033[0m");
+    }
+
+    printFooter();
+}
+
+void printSubMenu()
+{
+    system("clear");
+    printHeader("Insertion Options", 26);
+    printSingleOption("1. Ajouter manuellement", 4, 41, 0);
+    printSingleOption("2. Ajouter à partir d'une fichier", 4, 31, 0);
+    printSingleOption(" ", 4, 63, 0);
+    printSingleOption("0. Retourner", 4, 52, 1);
+    printFooter();
+}
+
+tree *handleFile(tree *dico, const char *filePath)
+{
+    FILE *file = fopen(filePath, "r");
+
+    system("clear");
+    printHeader("Insertion Options", 25);
+    printCharactere(' ', 18);
+
+    if (!file)
+    {
+        printf("\033[1;31mVeuillez vérifier le nom de fichier\033[0m");
+        printFooter();
+        return dico;
+    }
+
+    char line[500];
+
+    while (fgets(line, sizeof(line), file))
+    {
+        line[strlen(line) - 1] = '\0';
+        dico = dicoInsererMot(line, dico, 0);
+    }
+
+    fclose(file);
+
+    printf("\033[0;32mMots ajoutés avec succès\033[0m");
+    printFooter();
+
+    return dico;
+}
+
+
+void chooseLevel(tree *myTree)
+{
+    int levelOption;
+
+    do
+    {
+        printCharactere(' ', 4);
+        printf("Choisissez un niveau (1-3) => ");
+        scanf("%d", &levelOption);
+
+    } while (levelOption < 1 || levelOption > 3);
+
+    char filePath[100];
+    sprintf(filePath, "src/Words/Animals/level%d.txt", levelOption);
+
+    myTree = handleFile(myTree, filePath);
+
+    printToConsole();
+}
+
+
+tree *HandleManual(tree *dico)
+{
+    char word[100];
+
+    do
+    {
+        printCharactere(' ', 4);
+        printf("Entrer mot => ");
+        scanf("%s", word);
+    } while (strlen(word) < 0 || strlen(word) > 100);
+
+    system("clear");
+    printHeader("Insertion Options", 25);
+    printCharactere(' ', 23);
+
+    printf("\033[0;32mMot ajouté avec success\033[0m");
+    printFooter();
+
+    return dicoInsererMot(word, dico, 0);
+}
+
+tree *fillTree(tree *dico)
+{
+    int option;
+    int level; 
+    printSubMenu();
+    do
+    {
+        printCharactere(' ', 4);
+        printf(" => ");
+        scanf("%d", &option);
+    } while (option < 0 || option > 2);
+
+    switch (option)
+    {
+    case 0:
+        system("clear");
+        break;
+    case 1:
+        dico = HandleManual(dico);
+        break;
+
+    case 2:
+    printf("quelle niveau vous vouler!"); 
+    scanf("%d",&level);
+        dico = handleFile(dico,"src/Words/Animals/level%d.txt");
+        break;
+
+    default:
+        break;
+    }
+
+    return dico;
+}
+
+
 /*
 tree *printRandomWord(tree *dico)
 {
@@ -169,114 +309,3 @@ tree *printRandomWord(tree *dico)
     return dico;
 }
 */
-void printEmptiedTree(tree *dico)
-{
-    system("clear");
-    printHeader("Dictionary Management", 22);
-    printCharactere(' ', 25);
-    if (dico == NULL)
-    {
-        printf("\033[1;31mL'arbre est déja vide\033[0m");
-    }
-    else
-    {
-        printf("\033[0;32mArbre effacé avec succès\033[0m");
-    }
-
-    printFooter();
-}
-
-void printSubMenu()
-{
-    system("clear");
-    printHeader("Insertion Options", 26);
-    printSingleOption("1. Ajouter manuellement", 4, 41, 0);
-    printSingleOption("2. Ajouter à partir d'une fichier", 4, 31, 0);
-    printSingleOption(" ", 4, 63, 0);
-    printSingleOption("0. Retourner", 4, 52, 1);
-    printFooter();
-}
-
-tree *handleFile(tree *dico) {
-    char filename[] = "src/Words/Animals/level1.txt";  // Hardcoded file path
-
-    FILE *file = fopen(filename, "r");
-
-    system("clear");
-    printHeader("Insertion Options", 25);
-    printCharactere(' ', 18);
-
-    if (!file) {
-        printf("\033[1;31mVeuillez vérifier le nom de fichier\033[0m");
-        printFooter();
-
-        return dico;
-    }
-
-    char line[500];
-
-    while (fgets(line, sizeof(line), file)) {
-        line[strlen(line) - 1] = '\0';
-        dico = dicoInsererMot(line, dico, 0);
-    }
-
-    fclose(file);
-
-    printf("\033[0;32mMots ajoutés avec succès\033[0m");
-    printFooter();
-
-    return dico;
-}
-
-tree *HandleManual(tree *dico)
-{
-    char word[100];
-
-    do
-    {
-        printCharactere(' ', 4);
-        printf("Entrer mot => ");
-        scanf("%s", word);
-    } while (strlen(word) < 0 || strlen(word) > 100);
-
-    system("clear");
-    printHeader("Insertion Options", 25);
-    printCharactere(' ', 23);
-
-    printf("\033[0;32mMot ajouté avec success\033[0m");
-    printFooter();
-
-    return dicoInsererMot(word, dico, 0);
-}
-
-tree *fillTree(tree *dico)
-{
-    int option;
-
-    printSubMenu();
-    do
-    {
-        printCharactere(' ', 4);
-        printf(" => ");
-        scanf("%d", &option);
-    } while (option < 0 || option > 2);
-
-    switch (option)
-    {
-    case 0:
-        system("clear");
-        break;
-    case 1:
-        dico = HandleManual(dico);
-        break;
-
-    case 2:
-        dico = handleFile(dico);
-        break;
-
-    default:
-        break;
-    }
-
-    return dico;
-}
