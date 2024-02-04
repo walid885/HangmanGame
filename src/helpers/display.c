@@ -254,6 +254,22 @@ void printThemeSubMenu(int *theme) {
     } while (*theme < 0 || *theme > 3);
 }
 
+void printLevelSubMenu(int *level) {
+    system("clear");
+    printHeader("Level Selection", 27);
+    printSingleOption("1. Level 1", 4, 45, 0);
+    printSingleOption("2. Level 2", 4, 45, 0);
+    printSingleOption("3. Level 3", 4, 45, 0);
+    printSingleOption("0. Back", 4, 54, 1);
+    printFooter();
+
+    do {
+        printCharactere(' ', 4);
+        printf(" => ");
+        scanf("%d", level);
+    } while (*level < 0 || *level > 3);
+}
+
 tree *HandleManual(tree *dico) {
     int theme;
     int level;
@@ -264,12 +280,7 @@ tree *HandleManual(tree *dico) {
         return dico;
     }
 
-    do {
-        printSubMenu();
-        printCharactere(' ', 4);
-        printf(" => ");
-        scanf("%d", &level);
-    } while (level < 0 || level > 3);
+    printLevelSubMenu(&level);
 
     char filePath[100];
     sprintf(filePath, "src/Words/%s/level%d.txt", (theme == 1) ? "Animals" : ((theme == 2) ? "Furniture" : "Food"), level);
