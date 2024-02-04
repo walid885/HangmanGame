@@ -12,3 +12,4 @@ tree *printRandomWord(tree *dico);
 void printEmptiedTree(tree *dico);
 tree *fillTree(tree *dico);
 void printHelp();
+void printThemeSubMenu(int *theme);

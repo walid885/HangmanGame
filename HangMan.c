@@ -5,27 +5,69 @@
 #include "headers/Display.h"
 
 int main() {
+    printf("Main is running!\n");
+
     // Create an empty tree
-    printf("main is running !\n");
     tree *myTree = arbreConsVide();
-    printf("line10\n");
+    printf("Line 10\n");
 
-    // Call chooseLevel to select a level and load words into the tree
-    chooseLevel(myTree);
+    int userChoice;
 
-    // Display the words in the tree
-    printf("Words in the tree:\n");
-    char wordArray[50];
-    dicoAfficher(myTree, wordArray, 0);
+    do {
+        // Display the main menu
+        printToConsole();
 
-    // Delete the tree
+        // Get user choice
+        printf("\nEnter your choice (0-6): ");
+        scanf("%d", &userChoice);
+
+        // Process user choice
+        switch (userChoice) {
+            case 1:
+                // Add words manually
+                myTree = HandleManual(myTree);
+                break;
+            case 2:
+                // Consult the dictionary
+                printDictionary(myTree, "", 0);
+                break;
+            case 3:
+                // Display the total number of words
+                printTotalWords(myTree);
+                break;
+            case 4:
+                // Display the number of different words
+                printDifferentWords(myTree);
+                break;
+            case 5:
+                // Consult the number of occurrences of a word
+                printOccurrences(myTree);
+                break;
+            case 6:
+                // Choose a level and load words into the tree
+                chooseLevel(myTree);
+                break;
+            case 7:
+                // Empty the tree
+                myTree = arbreConsVide();
+                printEmptiedTree(myTree);
+                break;
+            case 0:
+                // Quit the program
+                printf("Exiting the program.\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+
+    } while (userChoice != 0);
+
+    // Delete the tree before exiting
     arbreSuppr(myTree);
     printf("Tree deleted.\n");
 
     return 0;
 }
-
-
 
 
 

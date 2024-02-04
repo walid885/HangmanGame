@@ -238,60 +238,62 @@ void chooseLevel(tree *myTree)
 }
 
 
-tree *HandleManual(tree *dico)
-{
-    char word[100];
+void printThemeSubMenu(int *theme) {
+    system("clear");
+    printHeader("Theme Selection", 27);
+    printSingleOption("1. Animals", 4, 41, 0);
+    printSingleOption("2. Furniture", 4, 35, 0);
+    printSingleOption("3. Food", 4, 40, 0);
+    printSingleOption("0. Back", 4, 54, 1);
+    printFooter();
 
-    do
-    {
+    do {
         printCharactere(' ', 4);
-        printf("Entrer mot => ");
-        scanf("%s", word);
-    } while (strlen(word) < 0 || strlen(word) > 100);
+        printf(" => ");
+        scanf("%d", theme);
+    } while (*theme < 0 || *theme > 3);
+}
+
+tree *HandleManual(tree *dico) {
+    int theme;
+    int level;
+    printThemeSubMenu(&theme);
+
+    if (theme == 0) {
+        system("clear");
+        return dico;
+    }
+
+    do {
+        printSubMenu();
+        printCharactere(' ', 4);
+        printf(" => ");
+        scanf("%d", &level);
+    } while (level < 0 || level > 3);
+
+    char filePath[100];
+    sprintf(filePath, "src/Words/%s/level%d.txt", (theme == 1) ? "Animals" : ((theme == 2) ? "Furniture" : "Food"), level);
 
     system("clear");
     printHeader("Insertion Options", 25);
-    printCharactere(' ', 23);
+    printCharactere(' ', 18);
 
-    printf("\033[0;32mMot ajouté avec success\033[0m");
-    printFooter();
+    char word[100];
 
-    return dicoInsererMot(word, dico, 0);
-}
-
-tree *fillTree(tree *dico)
-{
-    int option;
-    int level; 
-    printSubMenu();
-    do
-    {
+    do {
         printCharactere(' ', 4);
-        printf(" => ");
-        scanf("%d", &option);
-    } while (option < 0 || option > 2);
+        printf("Enter a word => ");
+        scanf("%s", word);
+    } while (strlen(word) < 0 || strlen(word) > 100);
 
-    switch (option)
-    {
-    case 0:
-        system("clear");
-        break;
-    case 1:
-        dico = HandleManual(dico);
-        break;
+    dico = dicoInsererMot(word, dico, 0);
 
-    case 2:
-    printf("quelle niveau vous vouler!"); 
-    scanf("%d",&level);
-        dico = handleFile(dico,"src/Words/Animals/level%d.txt");
-        break;
-
-    default:
-        break;
-    }
+    printf("\033[0;32mWord added successfully\033[0m");
+    printFooter();
 
     return dico;
 }
+
 
 
 /*
