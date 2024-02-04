@@ -270,9 +270,13 @@ void printLevelSubMenu(int *level) {
     } while (*level < 0 || *level > 3);
 }
 
-tree *HandleManual(tree *dico) {
+tree *HandleManual(tree *dico)
+{
     int theme;
     int level;
+    char word[100];
+
+    // Choose the theme (Animals, Furniture, Food)
     printThemeSubMenu(&theme);
 
     if (theme == 0) {
@@ -280,7 +284,13 @@ tree *HandleManual(tree *dico) {
         return dico;
     }
 
-    printLevelSubMenu(&level);
+    // Choose the level
+    do {
+        printSubMenu();
+        printCharactere(' ', 4);
+        printf(" => ");
+        scanf("%d", &level);
+    } while (level < 0 || level > 3);
 
     char filePath[100];
     sprintf(filePath, "src/Words/%s/level%d.txt", (theme == 1) ? "Animals" : ((theme == 2) ? "Furniture" : "Food"), level);
@@ -289,14 +299,28 @@ tree *HandleManual(tree *dico) {
     printHeader("Insertion Options", 25);
     printCharactere(' ', 18);
 
-    char word[100];
-
+    // Get the word from the user
     do {
         printCharactere(' ', 4);
         printf("Enter a word => ");
         scanf("%s", word);
     } while (strlen(word) < 0 || strlen(word) > 100);
 
+    // Open the file in append mode
+    FILE *file = fopen(filePath, "a");
+
+    if (!file) {
+        printf("\033[1;31mError opening the file\033[0m");
+        printFooter();
+        return dico;
+    }
+
+    // Append the word to the file
+    fprintf(file, "%s\n", word);
+
+    fclose(file);
+
+    // Insert the word into the tree
     dico = dicoInsererMot(word, dico, 0);
 
     printf("\033[0;32mWord added successfully\033[0m");
