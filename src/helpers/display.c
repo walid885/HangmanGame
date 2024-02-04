@@ -292,19 +292,32 @@ tree *HandleManual(tree *dico)
         scanf("%d", &level);
     } while (level < 0 || level > 3);
 
-    char filePath[100];
-    sprintf(filePath, "src/Words/%s/level%d.txt", (theme == 1) ? "Animals" : ((theme == 2) ? "Furniture" : "Food"), level);
-
-    // Open the file in append mode
-    FILE *file = fopen(filePath, "a");
-
-    if (!file) {
-        printf("\033[1;31mError opening the file\033[0m");
-        printFooter();
-        return dico;
-    }
-
     while (1) {
+        // Choose the level submenu (Level 1, Level 2, Level 3)
+        printLevelSubMenu(&level);
+
+        if (level == 0) {
+            // If the user selects 0, go back to the main menu
+            system("clear");
+            printHeader("Insertion Options", 25);
+            printCharactere(' ', 18);
+            printf("\033[0;32mWords added successfully\033[0m");
+            printFooter();
+            return dico;
+        }
+
+        char filePath[100];
+        sprintf(filePath, "src/Words/%s/level%d.txt", (theme == 1) ? "Animals" : ((theme == 2) ? "Furniture" : "Food"), level);
+
+        // Open the file in append mode
+        FILE *file = fopen(filePath, "a");
+
+        if (!file) {
+            printf("\033[1;31mError opening the file\033[0m");
+            printFooter();
+            return dico;
+        }
+
         // Get the word from the user
         do {
             printCharactere(' ', 4);
@@ -313,12 +326,7 @@ tree *HandleManual(tree *dico)
 
             if (strcmp(word, "exit") == 0) {
                 fclose(file);
-                system("clear");
-                printHeader("Insertion Options", 25);
-                printCharactere(' ', 18);
-                printf("\033[0;32mWords added successfully\033[0m");
-                printFooter();
-                return dico;
+                break;  // Break the loop to go back to level selection
             }
 
         } while (strlen(word) < 0 || strlen(word) > 100);
@@ -328,13 +336,12 @@ tree *HandleManual(tree *dico)
 
         // Insert the word into the tree
         dico = dicoInsererMot(word, dico, 0);
-    }
 
-    fclose(file);
+        fclose(file);
+    }
 
     return dico;
 }
-
 
 
 /*
