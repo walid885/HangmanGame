@@ -216,10 +216,25 @@ void chooseLevel(tree *myTree)
 
     char filePath[100];
     sprintf(filePath, "src/Words/Animals/level%d.txt", levelOption);
+    printf("this is where is line 219!00");
+    // Clear the tree before loading words from a new level
+    arbreSuppr(myTree);
 
+    // Open and load words from the selected level file
     myTree = handleFile(myTree, filePath);
 
-    printToConsole();
+    // Display the words in the chosen level
+    printf("Words in Level %d:\n", levelOption);
+    char wordArray[50];
+    dicoAfficher(myTree, wordArray, 0);
+
+    // Optionally, you can continue with other game logic or interactions here
+
+    // Example: Ask the user to play the Hangman game with words from this level
+    // playHangman(myTree);
+
+    // Clear the tree if needed
+    arbreSuppr(myTree);
 }
 
 

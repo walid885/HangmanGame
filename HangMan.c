@@ -10,38 +10,17 @@ int main() {
     tree *myTree = arbreConsVide();
     printf("line10\n");
 
-    // Check if the tree is empty
-  
-        // Handle the empty tree case, e.g., create a new root
-            myTree = fillTree(myTree);
+    // Call chooseLevel to select a level and load words into the tree
+    chooseLevel(myTree);
 
-           printf("the treeee is empty babe !\n");
-    
-            // Continue with the existing tree operations
-        // Open the file containing the words
-        FILE *fp;
-        fp = fopen("src/Words/Animals/level1.txt", "r");
+    // Display the words in the tree
+    printf("Words in the tree:\n");
+    char wordArray[50];
+    dicoAfficher(myTree, wordArray, 0);
 
-        // Read each word from the file and insert it into the tree
-        char word[50];
-        while (fscanf(fp, "%s", word) != EOF) {
-            myTree = dicoInsererMot(word, myTree, 0);
-        }
-
-        // Close the file
-        fclose(fp);
-        printf("Words in the tree:\n");
-        char wordArray[50];
-        dicoAfficher(myTree, wordArray, 0);
-
-
-
-
-
-        // Delete the tree
-        arbreSuppr(myTree);
-        printf("Tree deleted.\n");
-
+    // Delete the tree
+    arbreSuppr(myTree);
+    printf("Tree deleted.\n");
 
     return 0;
 }
