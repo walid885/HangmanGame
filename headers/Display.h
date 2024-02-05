@@ -14,3 +14,4 @@ tree *fillTree(tree *dico);
 void printHelp();
 void printThemeSubMenu(int *theme);
 void printLevelSubMenu(int *level);
+tree *HandleManual(tree *dico);
