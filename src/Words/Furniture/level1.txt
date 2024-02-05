@@ -1,3 +1,6 @@
 yes
 nnnn
 EXIT
+testtt
+teststsele
+lemeslmlse

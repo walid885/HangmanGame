@@ -321,21 +321,26 @@ tree *HandleManual(tree *dico)
         // Get the word from the user
         do {
             printCharactere(' ', 4);
-            printf("Enter a word (or type 'exit' to finish) => ");
-            scanf("%s", word);
-
-            if (strcmp(word, "exit") == 0) {
+            printf("Enter a word (or type '0' to finish) => ");
+            if (scanf("%99s", word) != 1) {
+                // Handle invalid input or EOF
+                printf("Error reading input. Exiting...\n");
                 fclose(file);
-                break;  // Break the loop to go back to level selection
+                return dico;
             }
 
-        } while (strlen(word) == 0 || strlen(word) > 100);
+            if (strcmp(word, "0") == 0) {
+                fclose(file);
+                return dico;
+            }
 
-        // Append the word to the file
-        fprintf(file, "%s\n", word);
+            // Append the word to the file
+            fprintf(file, "%s\n", word);
 
-        // Insert the word into the tree
-        dico = dicoInsererMot(word, dico, 0);
+            // Insert the word into the tree
+            dico = dicoInsererMot(word, dico, 0);
+
+        } while (strlen(word) > 0);
 
         fclose(file);
     }
