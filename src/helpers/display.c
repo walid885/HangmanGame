@@ -329,7 +329,7 @@ tree *HandleManual(tree *dico)
                 break;  // Break the loop to go back to level selection
             }
 
-        } while (strlen(word) < 0 || strlen(word) > 100);
+        } while (strlen(word) == 0 || strlen(word) > 100);
 
         // Append the word to the file
         fprintf(file, "%s\n", word);
