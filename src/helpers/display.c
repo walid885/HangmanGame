@@ -60,33 +60,36 @@ void printFooter()
     printCharactere('-', 70);
 }
 
-void printToConsole()
-{
-    printHeader("Dictionary Management", 22);
-    printOptions();
+void printToConsole() {
+    system("clear");
+    printHeader("Main Menu", 25);
+    printSingleOption("1. Add words manually", 4, 40, 0);
+    printSingleOption("2. Consult the dictionary", 4, 35, 0);
+    printSingleOption("3. Display the total number of words", 4, 22, 0);
+    printSingleOption("4. Display the number of different words", 4, 18, 0);
+    printSingleOption("5. Consult the number of occurrences of a word", 4, 10, 0);
+    printSingleOption("6. Choose a level and load words into the tree", 4, 4, 0);
+    printSingleOption("7. Empty the tree", 4, 32, 0);
+    printSingleOption("0. Quit the program", 4, 44, 1);
     printFooter();
 }
 
-void printDictionary(tree *dico, char path[], int wordLen)
-{
+void printDictionary(tree *dico, int theme, int level) {
     system("clear");
     printHeader("Current Dictionary", 25);
-    if (dico == NULL)
-    {
+    if (dico == NULL) {
         printCharactere(' ', 25);
         printf("\033[1;31mL'arbre est vide\033[0m");
-    }
-    else
-    {
-        dicoAfficher(dico, path, wordLen);
+    } else {
+        // Assuming dicoAfficher needs the theme and level parameters
+        dicoAfficher(dico, theme, level);
     }
 
     printFooter();
 
     int option;
 
-    do
-    {
+    do {
         printCharactere(' ', 4);
         printf(" 0 pour retourner => ");
         scanf("%d", &option);

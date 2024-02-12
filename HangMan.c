@@ -12,7 +12,7 @@ int main() {
     printf("Line 10\n");
 
     int userChoice;
-
+    int theme, level;
     do {
         // Display the main menu
         printToConsole();
@@ -29,8 +29,13 @@ int main() {
                 break;
             case 2:
                 // Consult the dictionary
-                printDictionary(myTree, "", 0);
+                printThemeSubMenu(&theme);
+                printCharactere(' ', 4);
+                printf(" => ");
+                scanf("%d", &level);
+                printDictionary(myTree, theme, level);
                 break;
+
             case 3:
                 // Display the total number of words
                 printTotalWords(myTree);

@@ -1,12 +1,14 @@
 #ifndef TREE_H
 #define TREE_H
 
-typedef struct treeType
-{
-    int occurrences;
+typedef struct TreeNode {
     char letter;
-    struct treeType *left;
-    struct treeType *right;
+    int occurrences;
+    int theme;
+    int level;
+    struct TreeNode *left;
+    struct TreeNode *right;
 } tree;
+
 
 #endif

@@ -46,34 +46,44 @@ void printArray(char letters[], int len)
 }
 
 // ? END HELPERS
+tree *createTempTree(int theme, int level) {
+    // Implement the logic to create a temporary tree based on theme and level
+    // You may need to read words from the corresponding file and insert them into the tree
+    // Example:
+    tree *tempTree = arbreConsVide();
+    tempTree = fillTree(tempTree);  // Implement fillTree based on theme and level
+    return tempTree;
+}
 
 // * Afficher tous les mots d'un arbre donné
-void dicoAfficher(tree *node, char word[], int wordLen)
-{
-    if (node == NULL)
-        return;
-
-    // * Si le noeud a comme lettre \0, on a arrivé à la fin du mot
-    // * et on doit l'afficher
-    if (node->letter == '\0')
-        printArray(word, wordLen);
-
-    // * Sinon, on ajoute la lettre dans un tableau et on incémente son indice
-    if (node->letter != '\0')
-    {
-        word[wordLen] = node->letter;
-        wordLen++;
+void printDictionary(tree *dico, int theme, int level) {
+    system("clear");
+    printHeader("Current Dictionary", 25);
+    if (dico == NULL) {
+        printCharactere(' ', 25);
+        printf("\033[1;31mL'arbre est vide\033[0m");
+    } else {
+        // Create a temporary tree based on the specified theme and level
+        tree *tempTree = createTempTree(theme, level);
+        
+        // Assuming dicoAfficher needs the theme and level parameters
+        dicoAfficher(tempTree, "", 0);
+        
+        // Delete the temporary tree after use
+        arbreSuppr(tempTree);
     }
 
-    // * On passe au noeud droite suivant avec le nouveau tableau
-    dicoAfficher(node->left, word, wordLen);
+    printFooter();
 
-    // * On passe au noeud gauche mais on décremente l'indice pour
-    // * que le nouveau mot prenne place (on écrase l'anciennes valeurs)
-    if (node->letter != '\0')
-        wordLen--;
+    int option;
 
-    dicoAfficher(node->right, word, wordLen);
+    do {
+        printCharactere(' ', 4);
+        printf(" 0 pour retourner => ");
+        scanf("%d", &option);
+    } while (option != 0);
+
+    system("clear");
 }
 
 // * On insère un mot dans un arbre donné, si le mot existe on incremente le nombre d'occurence
